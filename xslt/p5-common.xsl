@@ -18,7 +18,7 @@
     <xsl:variable name="documentId" select="((/tei:teiCorpus|/tei:TEI)/@xml:id)[1]"/>
     
     <xsl:template match="tei:div[@xml:id='element-reference']">
-        <xsl:variable name="element-reference" select="string-join((replace($input.dir,'/$',''),'element-reference.xml'),'/')"/>
+        <xsl:variable name="element-reference" select="string-join((replace($input.dir,'/$',''),'element-reference.html'),'/')"/>
         <xsl:if test="doc-available($element-reference)">
             <xsl:copy-of select="doc($element-reference)"/>
         </xsl:if>
