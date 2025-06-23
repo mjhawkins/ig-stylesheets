@@ -12,7 +12,7 @@
     
     <xsl:mode on-no-match="shallow-copy"/>
     
-    <xsl:param name="output.dir"/>
+    <xsl:param name="output.dir" />
     
     <xsl:template match="/tei:TEI">
         
@@ -38,9 +38,9 @@
         </xsl:copy>
     </xsl:template>
     
-    <!--<xsl:template match="@*|node()" mode="odd">
+    <xsl:template match="@*|node()" mode="#all">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" mode="#current"/>
         </xsl:copy>
-    </xsl:template>-->
+    </xsl:template>
 </xsl:stylesheet>
