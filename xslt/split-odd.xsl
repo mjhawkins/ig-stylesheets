@@ -28,15 +28,7 @@
         <div xml:id="element-reference"></div>
     </xsl:template>
     
-    <xsl:template match="tei:text" mode="odd">
-        <xsl:copy>
-            <text>
-                <div>
-                    <xsl:copy-of select=".//tei:schemaSpec"></xsl:copy-of>
-                </div>
-            </text>
-        </xsl:copy>
-    </xsl:template>
+    <xsl:template match="tei:div[not(.//tei:schemaSpec)]" mode="odd"/>
     
     <xsl:template match="@*|node()" mode="#all">
         <xsl:copy>
