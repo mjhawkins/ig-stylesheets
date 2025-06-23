@@ -11,10 +11,18 @@
     xmlns="http://www.w3.org/1999/xhtml"
     exclude-result-prefixes="#all">
     
-    <xsl:output method="text" indent="no" encoding="UTF-8"/>
+    <xsl:output method="html" version="5" indent="no" encoding="UTF-8"/>
     
+    <xsl:param name="input.dir" />
     <xsl:variable name="useMathJax" select="true()"/>
     <xsl:variable name="documentId" select="((/tei:teiCorpus|/tei:TEI)/@xml:id)[1]"/>
+    
+    <xsl:template match="tei:div[@xml:id='element-reference']">
+        <xsl:variable name="element-reference" select="string-join((replace($input.dir,'/$',''),'element-reference.xml'),'/')"/>
+        <xsl:if test="doc-available($element-reference)">
+            <xsl:copy-of select="doc($element-reference)"/>
+        </xsl:if>
+    </xsl:template>
     
     <xsl:template match="tei:text" mode="#all">
         <div id="tei">
