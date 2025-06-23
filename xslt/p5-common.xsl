@@ -13,14 +13,13 @@
     
     <xsl:output method="html" version="5" indent="no" encoding="UTF-8"/>
     
-    <xsl:param name="input.dir" />
+    <xsl:param name="element-reference.path" />
     <xsl:variable name="useMathJax" select="true()"/>
     <xsl:variable name="documentId" select="((/tei:teiCorpus|/tei:TEI)/@xml:id)[1]"/>
     
     <xsl:template match="tei:div[@xml:id='element-reference']">
-        <xsl:variable name="element-reference" select="string-join((replace($input.dir,'/$',''),'element-reference.html'),'/')"/>
-        <xsl:if test="doc-available($element-reference)">
-            <xsl:copy-of select="doc($element-reference)"/>
+        <xsl:if test="doc-available($element-reference.path)">
+            <xsl:apply-templates select="doc($element-reference.path)//tei:schemaSpec" mode="odd-tidy"/>
         </xsl:if>
     </xsl:template>
     
@@ -978,5 +977,15 @@
             <xsl:value-of select="$indicator"/>
             <xsl:text>]</xsl:text>
         </sup>
+    </xsl:template>
+    
+    <!-- Tidy full.odd -->
+    
+    <xsl:template match="*[not(ancestor::teix:egXML)][local-name()=('gloss','desc', 'remarks','exemplum','egXML','constraintSpec')][not(@xml:lang =('en','eng')) and @xml:lang]" mode="odd-tidy"/>
+    
+    <xsl:template match="@*|node()" mode="odd-tidy">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()" mode="#current"/>
+        </xsl:copy>
     </xsl:template>
 </xsl:stylesheet>
